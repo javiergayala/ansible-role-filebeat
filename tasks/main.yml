@@ -1,0 +1,14 @@
+---
+# tasks file for ansible-role-filebeat
+- name: Include OS-specific vars
+  include_vars: "filebeat-{{ansible_os_family}}.yml"
+
+- name: Include tasks to setup the Filebeat repo
+  include: "setup-{{ ansible_os_family }}.yml"
+  when: es_use_repository is undefined or not es_use_repository
+
+- name: Include tasks to install Filebeat
+  include: "install-{{ ansible_os_family }}.yml"
+
+- name: Include tasks to configure Filebeat
+  include: "config-{{ ansible_os_family }}.yml"

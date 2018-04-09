@@ -1,0 +1,14 @@
+---
+- name: Create Filebeat config file
+  template:
+    src: "templates/filebeat.yml.j2"
+    dest: "{{ filebeat_config_file }}"
+  when: filebeat_create_config
+  notify:
+    - restart filebeat
+
+- name: Enable Filebeat to start at boot
+  systemd:
+    name: filebeat
+    state: "{{ filebeat_run_state | default('started') }}"
+    enabled: "{{ filebeat_enabled | default('yes') }}"

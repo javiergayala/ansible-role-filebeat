@@ -1,0 +1,42 @@
+---
+# {{ ansible_managed }}
+# Filebeat Configuration File (See 'filebeat_config_content' Ansible variable)
+
+{% for config_key, config_val in filebeat_config_content.iteritems() %}
+{{ config_key }}:
+{% if config_val is mapping %}
+{% for key, val in config_val.iteritems() %}
+{% if val is string or val is number %}
+  {{ key }}: {{ val }}
+{% elif val is sequence and val is not mapping %}
+  {{ key }}:
+{% for item in val %}
+    - {{ item }}
+{% endfor %}
+{% else %}
+  {{ key }}: {{ val }}
+{% endif %}
+{% endfor %}
+{% else %}
+{% for entry in config_val %}
+{% if entry is sequence and entry is not mapping %}
+  {{ entry }} {{ entry|length() }}
+{% else %}
+{% for key, val in entry.iteritems() %}
+{% if loop.first %}
+  - {{ key }}: {{ val }}
+{% else %}
+{% if val is sequence and val is not string %}
+    {{ key }}:
+{% for item in val %}
+      - {{ "%s" | format(item) }}
+{% endfor %}
+{% else %}
+    {{ key }}: {{ val }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,14 @@
+---
+- name: Install the Elastic.co PGP Key for YUM
+  rpm_key:
+    key: "{{ filebeat_repo_key }}"
+    state: present
+
+- name: Add Elastic.co YUM Repo
+  yum_repository:
+    name: "elasticsearch-{{ es_major_version }}"
+    baseurl: "https://artifacts.elastic.co/packages/{{ es_major_version }}/yum"
+    description: "Elasticsearch repository for {{ es_major_version }} packages"
+    gpgcheck: 1
+    gpgkey: "{{ filebeat_repo_key }}"
+    enabled: 1

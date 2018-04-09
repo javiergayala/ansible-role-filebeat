@@ -1,0 +1,30 @@
+---
+# defaults file for ansible-role-filebeat
+es_major_version: "6.x"
+es_version: "6.2.3"
+filebeat_create_config: "true"
+filebeat_enabled: "yes"
+filebeat_params: {}
+filebeat_repo_key: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
+filebeat_run_state: started
+
+filebeat_prospectors:
+  - type: log
+    enabled: "true"
+    paths:
+      - "/var/log/*.log"
+
+filebeat_config_content:
+  filebeat.prospectors:
+    - type: log
+      enabled: "true"
+      paths:
+        - "/var/log/*.log"
+  filebeat.config.modules:
+    reload.enabled: "false"
+    path: "{{ filebeat_modules_dir }}/*.yml"
+  setup.template.settings:
+    index.number_of_shards: 3
+  output.elasticsearch:
+    hosts:
+      - "localhost:9200"

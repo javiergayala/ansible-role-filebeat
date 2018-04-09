@@ -1,0 +1,5 @@
+---
+- name: Install Filebeat via YUM
+  yum:
+    name: "filebeat-{{ es_version }}"
+    state: present

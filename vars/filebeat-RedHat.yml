@@ -1,0 +1,6 @@
+---
+filebeat_home: /usr/share/filebeat
+filebeat_bin_dir: "{{ filebeat_home }}/bin"
+filebeat_config_dir: "/etc/filebeat"
+filebeat_config_file: "{{ filebeat_config_dir }}/filebeat.yml"
+filebeat_modules_dir: "{{ filebeat_config_dir }}/modules.d"

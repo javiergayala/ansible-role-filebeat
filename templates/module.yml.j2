@@ -1,0 +1,18 @@
+- module: {{ item.key }}
+{% for key, val in item.value.iteritems() %}
+{% if val is string or val is number %}
+  {{ key }}: {{ val }}
+{% elif val is sequence and val is mapping %}
+  {{ key }}:
+{% for dict_key, dict_val in val.iteritems() %}
+    {{ dict_key }}: {{ dict_val }}
+{% endfor %}
+{% elif val is sequence and val is not mapping %}
+  {{ key }}:
+{% for item in val %}
+    - {{ item }}
+{% endfor %}
+{% else %}
+  {{ key }}: {{ value }}
+{% endif %}
+{% endfor %}

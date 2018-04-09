@@ -8,12 +8,6 @@ filebeat_params: {}
 filebeat_repo_key: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
 filebeat_run_state: started
 
-filebeat_prospectors:
-  - type: log
-    enabled: "true"
-    paths:
-      - "/var/log/*.log"
-
 filebeat_config_content:
   filebeat.prospectors:
     - type: log
@@ -28,3 +22,4 @@ filebeat_config_content:
   output.elasticsearch:
     hosts:
       - "localhost:9200"
+filebeat_module_config: {}

@@ -18,6 +18,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
      'output.elasticsearch:'),
     ('/etc/filebeat/filebeat.yml',
      'setup.template.settings:'),
+    ('/etc/filebeat/modules.d/system.yml',
+     'syslog:'),
 ])
 def test_files(host, name, content):
     """Test that file exists."""

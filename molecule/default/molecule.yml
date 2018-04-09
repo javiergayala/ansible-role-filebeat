@@ -16,6 +16,15 @@ platforms:
       - SYS_ADMIN
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      instance:
+        filebeat_module_config:
+          system:
+            syslog:
+              enabled: "true"
+            auth:
+              enabled: "true"
   lint:
     name: ansible-lint
 scenario:

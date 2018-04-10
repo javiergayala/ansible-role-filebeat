@@ -4,7 +4,6 @@ es_major_version: "6.x"
 es_version: "6.2.3"
 filebeat_create_config: "true"
 filebeat_enabled: "yes"
-filebeat_params: {}
 filebeat_repo_key: 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
 filebeat_run_state: started
 

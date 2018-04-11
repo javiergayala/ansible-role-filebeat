@@ -4,7 +4,10 @@
 
 {% for config_key, config_val in filebeat_config_content.iteritems() %}
 {{ config_key }}:
-{% if config_val is mapping %}
+{%- if config_val is string or config_val is number %}
+ {{ config_val }}
+{% elif config_val is mapping %}
+
 {% for key, val in config_val.iteritems() %}
 {% if val is string or val is number %}
   {{ key }}: {{ val }}
@@ -24,6 +27,7 @@
 {% endfor %}
 {% else %}
 {% for entry in config_val %}
+
 {% if entry is sequence and entry is not mapping %}
   {{ entry }} {{ entry|length() }}
 {% else %}

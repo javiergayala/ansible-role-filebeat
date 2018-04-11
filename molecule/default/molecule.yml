@@ -35,6 +35,8 @@ provisioner:
           output.elasticsearch:
             hosts:
               - "localhost:9200"
+          setup.dashboard.enabled: "true"
+          setup.kibana.host: '"localhost:5601"'
         filebeat_module_config:
           system:
             syslog:

@@ -22,6 +22,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
      'syslog:'),
     ('/etc/filebeat/filebeat.yml',
      'system: true'),
+    ('/etc/filebeat/filebeat.yml',
+     'setup.kibana.host: "localhost:5601"'),
 ])
 def test_files(host, name, content):
     """Test that file exists."""

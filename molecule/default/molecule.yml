@@ -19,6 +19,22 @@ provisioner:
   inventory:
     host_vars:
       instance:
+        filebeat_config_content:
+          filebeat.prospectors:
+            - type: log
+              enabled: "true"
+              paths:
+                - "/var/log/*.log"
+              fields:
+                system: "true"
+          filebeat.config.modules:
+            reload.enabled: "false"
+            path: "{{ filebeat_modules_dir }}/*.yml"
+          setup.template.settings:
+            index.number_of_shards: 3
+          output.elasticsearch:
+            hosts:
+              - "localhost:9200"
         filebeat_module_config:
           system:
             syslog:

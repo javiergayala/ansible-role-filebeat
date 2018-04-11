@@ -13,6 +13,11 @@
 {% for item in val %}
     - {{ item }}
 {% endfor %}
+{% elif val is sequence and val is mapping %}
+  {{ key }}:
+{% for dkey, dval in val.iteritems() %}
+    {{ dkey }}: {{ dval }}
+{% endfor %}
 {% else %}
   {{ key }}: {{ val }}
 {% endif %}
@@ -24,7 +29,20 @@
 {% else %}
 {% for key, val in entry.iteritems() %}
 {% if loop.first %}
-  - {{ key }}: {{ val }}
+  -
+{%- if val is sequence and val is mapping %}
+ {{ key }}:
+{% for dkey, dval in val.iteritems() %}
+      {{ dkey }}: {{ dval }}
+{% endfor %}
+{% elif val is sequence and val is not string %}
+ {{ key }}:
+{% for item in val %}
+      - {{ "%s" | format(item) }}
+{% endfor %}
+{%- else %}
+ {{ key }}: {{ val }}
+{% endif %}
 {% else %}
 {% if val is sequence and val is not string %}
     {{ key }}:

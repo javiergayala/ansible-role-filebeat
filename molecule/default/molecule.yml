@@ -41,6 +41,11 @@ provisioner:
           system:
             syslog:
               enabled: "true"
+              var.paths: '["/var/log/messages", "/var/log/secure"]'
+              prospector:
+                tags:
+                  - taga
+                  - tagb
             auth:
               enabled: "true"
   lint:

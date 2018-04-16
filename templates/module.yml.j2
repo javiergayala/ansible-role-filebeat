@@ -5,7 +5,26 @@
 {% elif val is sequence and val is mapping %}
   {{ key }}:
 {% for dict_key, dict_val in val.iteritems() %}
+{% if dict_val is sequence and dict_val is mapping %}
+    {{ dict_key }}:
+{% for dict_key_key, dict_val_val in dict_val.iteritems() %}
+{% if dict_val_val is sequence and dict_val_val is mapping %}
+{% for dict_val_val_key, dict_val_val_val in dict_val_val.iteritems() %}
+      {{ dict_val_val_key }}:
+{% for dict_val_val_val_val in dict_val_val %}
+        - {{ dict_val_val_val_val }}
+{% endfor %}
+{% endfor %}
+{% else %}
+      {{ dict_key_key }}:
+{% for dict_val_val_val_val in dict_val_val %}
+        - {{ dict_val_val_val_val }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
     {{ dict_key }}: {{ dict_val }}
+{% endif %}
 {% endfor %}
 {% elif val is sequence and val is not mapping %}
   {{ key }}:

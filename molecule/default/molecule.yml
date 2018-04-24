@@ -14,11 +14,51 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     capabilities:
       - SYS_ADMIN
+  - name: instance_disabled
+    image: centos:7
+    privileged: true
+    command: "/lib/systemd/systemd"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
 provisioner:
   name: ansible
   inventory:
     host_vars:
       instance:
+        filebeat_config_content:
+          filebeat.prospectors:
+            - type: log
+              enabled: "true"
+              paths:
+                - "/var/log/*.log"
+              fields:
+                system: "true"
+          filebeat.config.modules:
+            reload.enabled: "false"
+            path: "{{ filebeat_modules_dir }}/*.yml"
+          setup.template.settings:
+            index.number_of_shards: 3
+          output.elasticsearch:
+            hosts:
+              - "localhost:9200"
+          setup.dashboard.enabled: "true"
+          setup.kibana.host: '"localhost:5601"'
+        filebeat_module_config:
+          system:
+            syslog:
+              enabled: "true"
+              var.paths: '["/var/log/messages", "/var/log/secure"]'
+              prospector:
+                tags:
+                  - taga
+                  - tagb
+            auth:
+              enabled: "true"
+      instance_disabled:
+        filebeat_enabled: "no"
+        filebeat_run_state: stopped
         filebeat_config_content:
           filebeat.prospectors:
             - type: log

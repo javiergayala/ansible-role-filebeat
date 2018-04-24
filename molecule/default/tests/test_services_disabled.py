@@ -4,7 +4,7 @@ import testinfra.utils.ansible_runner
 import pytest
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
-    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('instance')
+    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('instance_disabled')
 
 
 @pytest.mark.parametrize("name", [
@@ -13,5 +13,5 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_services(host, name):
     """Test that service is running and enabled."""
     s = host.service(name)
-    assert s.is_running
-    assert s.is_enabled
+    assert not s.is_running
+    assert not s.is_enabled

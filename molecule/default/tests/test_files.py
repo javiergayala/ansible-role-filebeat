@@ -23,7 +23,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     ('/etc/filebeat/modules.d/system.yml',
      '- taga'),
     ('/etc/filebeat/modules.d/system.yml',
-     'var.paths: \["/var/log/messages", "/var/log/secure"\]'),
+     r'var.paths: \["/var/log/messages", "/var/log/secure"\]'),
     ('/etc/filebeat/filebeat.yml',
      'system: true'),
     ('/etc/filebeat/filebeat.yml',

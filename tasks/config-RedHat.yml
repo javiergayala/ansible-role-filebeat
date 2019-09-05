@@ -10,7 +10,7 @@
 - name: Create Filebeat module configs
   template:
     src: "templates/module.yml.j2"
-    dest: "{{filebeat_modules_dir}}/{{ item.key }}.yml"
+    dest: "{{ filebeat_modules_dir }}/{{ item.key }}.yml"
   when: filebeat_create_config
   with_dict: "{{ filebeat_module_config }}"
   notify:

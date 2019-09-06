@@ -1,15 +1,15 @@
 - module: {{ item.key }}
-{% for key, val in item.value.iteritems() %}
+{% for key, val in item.value.items() %}
 {% if val is string or val is number %}
   {{ key }}: {{ val }}
 {% elif val is sequence and val is mapping %}
   {{ key }}:
-{% for dict_key, dict_val in val.iteritems() %}
+{% for dict_key, dict_val in val.items() %}
 {% if dict_val is sequence and dict_val is mapping %}
     {{ dict_key }}:
-{% for dict_key_key, dict_val_val in dict_val.iteritems() %}
+{% for dict_key_key, dict_val_val in dict_val.items() %}
 {% if dict_val_val is sequence and dict_val_val is mapping %}
-{% for dict_val_val_key, dict_val_val_val in dict_val_val.iteritems() %}
+{% for dict_val_val_key, dict_val_val_val in dict_val_val.items() %}
       {{ dict_val_val_key }}:
 {% for dict_val_val_val_val in dict_val_val %}
         - {{ dict_val_val_val_val }}

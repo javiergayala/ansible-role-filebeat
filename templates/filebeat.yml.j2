@@ -2,13 +2,13 @@
 # {{ ansible_managed }}
 # Filebeat Configuration File (See 'filebeat_config_content' Ansible variable)
 
-{% for config_key, config_val in filebeat_config_content.iteritems() %}
+{% for config_key, config_val in filebeat_config_content.items() %}
 {{ config_key }}:
 {%- if config_val is string or config_val is number %}
  {{ config_val }}
 {% elif config_val is mapping %}
 
-{% for key, val in config_val.iteritems() %}
+{% for key, val in config_val.items() %}
 {% if val is string or val is number %}
   {{ key }}: {{ val }}
 {% elif val is sequence and val is not mapping %}
@@ -18,7 +18,7 @@
 {% endfor %}
 {% elif val is sequence and val is mapping %}
   {{ key }}:
-{% for dkey, dval in val.iteritems() %}
+{% for dkey, dval in val.items() %}
     {{ dkey }}: {{ dval }}
 {% endfor %}
 {% else %}
@@ -31,12 +31,12 @@
 {% if entry is sequence and entry is not mapping %}
   {{ entry }} {{ entry|length() }}
 {% else %}
-{% for key, val in entry.iteritems() %}
+{% for key, val in entry.items() %}
 {% if loop.first %}
   -
 {%- if val is sequence and val is mapping %}
  {{ key }}:
-{% for dkey, dval in val.iteritems() %}
+{% for dkey, dval in val.items() %}
       {{ dkey }}: {{ dval }}
 {% endfor %}
 {% elif val is sequence and val is not string %}
@@ -49,10 +49,17 @@
 {% endif %}
 {% else %}
 {% if val is sequence and val is not string %}
+{% if val is sequence and val is mapping %}
+    {{ key }}:
+{% for dkey, dval in val.items() %}
+      {{ dkey }}: {{ dval }}
+{% endfor %}
+{% else %}
     {{ key }}:
 {% for item in val %}
       - {{ "%s" | format(item) }}
 {% endfor %}
+{% endif %}
 {% else %}
     {{ key }}: {{ val }}
 {% endif %}

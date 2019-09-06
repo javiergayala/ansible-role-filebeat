@@ -12,7 +12,7 @@
     src: "templates/module.yml.j2"
     dest: "{{ filebeat_modules_dir }}/{{ item.key }}.yml"
   when: filebeat_create_config
-  with_dict: "{{ filebeat_module_config }}"
+  loop: "{{ filebeat_module_config|dict2items }}"
   notify:
     - restart filebeat
 

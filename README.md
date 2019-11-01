@@ -1,6 +1,6 @@
 # Ansible Role: Filebeat
 
-[![Build Status](https://travis-ci.org/javiergayala/ansible-role-filebeat.svg?branch=master)](https://travis-ci.org/javiergayala/ansible-role-filebeat) ![Ansible Role](https://img.shields.io/ansible/role/24920)
+[![Build Status](https://travis-ci.org/javiergayala/ansible-role-filebeat.svg?branch=master)](https://travis-ci.org/javiergayala/ansible-role-filebeat) ![Ansible Role](https://img.shields.io/ansible/role/24920?logo=ansible)
 
 Installs Filebeat on RedHat/CentOS.
 
